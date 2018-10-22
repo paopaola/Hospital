@@ -159,11 +159,10 @@ class Doktori(models.Model):
     def _specializimi_fundit(self):
         for record in self:
             if record.specializim:
-                data_fundit = datetime.now()
-                DATETIME_FORMAT = "%Y-%m-%d"
+                data_fundit = "1900-1-1"
                 for el in record.specializim:
-                    if datetime.strptime(el.data, DATETIME_FORMAT) < data_fundit:
-                        data_fundit = datetime.strptime(el.data, DATETIME_FORMAT)
+                    if el.data > data_fundit:
+                        data_fundit = el.data
                         special_fundit = el.name
                 record.specializimi_fundit = special_fundit
 
