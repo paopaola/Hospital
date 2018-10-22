@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_dept_form" model="ir.ui.view">
+            <field name="name">dept.form</field>
+            <field name="model">spital.departamenti</field>
+            <field name="arch" type="xml">
+                <form string="Departamenti">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="krye_mjek"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_dept_tree" model="ir.ui.view">
+            <field name="name">dept.tree</field>
+            <field name="model">spital.departamenti</field>
+            <field name="arch" type="xml">
+                <tree string="Departamentet">
+                    <field name="name"/>
+                    <field name="krye_mjek"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_dept_search" model="ir.ui.view">
+            <field name="name">dept.search</field>
+            <field name="model">spital.departamenti</field>
+            <field name="arch" type="xml">
+                <search string="Departamenti">
+                    <field name="name"/>
+                    <field name="krye_mjek"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_dept_kanban" model="ir.ui.view" >
+            <field name="name">dept.kanban</field>
+            <field name="model">spital.departamenti</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_details" style='margin-top: -5px;'>
+                                    <div class="oe_kanban_content">
+                                        <div class="oe_kanban_project_list">
+                                            <H3 style="margin-right: 10px; color:#1c6d3b">
+                                                <field name="name" />
+                                            </H3>
+                                        </div>
+                                        <div name="tags" />
+                                        <ul>
+                                            <li>
+                                                Krye Mjeku:
+                                                <field name="krye_mjek"></field>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="open_view_dept_tree" model="ir.actions.act_window">
+            <field name="name">Departamentet</field>
+            <field name="res_model">spital.departamenti</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="view_dept_tree"/>
+            <field name="search_view_id" ref="view_dept_search"/>
+        </record>
+
+        <menuitem
+            id="main_menu_dept" name="Departamentet" sequence="202"
+            web_icon="spitali,static/description/rsz_departamenti.png"/>
+
+        <menuitem
+            id="menu_open_view_dept"
+            action="open_view_dept_tree"
+            parent="main_menu_dept"
+            sequence="1"/>
+
+    </data>
+</odoo>

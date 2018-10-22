@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_pacient_form" model="ir.ui.view">
+            <field name="name">pacient.form</field>
+            <field name="model">spital.pacienti</field>
+            <field name="arch" type="xml">
+                <form string="Pacienti">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Emri i pacientit" required="True"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page name="info_personal" string="Informacion personal">
+                                <group>
+                                    <group string="Të dhëna personale">
+                                        <field name="nr_personal"/>
+                                        <field name="name"/>
+                                        <field name="amesia"/>
+                                        <field name="atesia"/>
+                                        <field name="ditelindja"/>
+                                        <field name="gjinia"/>
+                                        <field name="gjendja_civile"/>
+                                        <field name="vendlindja"/>
+                                        <field name="grupi_gjakut"/>
+                                    </group>
+                                    <group string="Të dhëna kontakti">
+                                        <field name="adresa"/>
+                                        <field name="cel"/>
+                                        <field name="email"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="epikriza" string="Epikriza">
+                                <field name="diagnoza_pacient">
+                                    <tree>
+                                        <field name="simptoma"/>
+                                        <field name="name"/>
+                                        <field name="trajtimi"/>
+                                        <field name="mjek_id"/>
+                                        <field name="dep_id"/>
+                                        <field name="date_fillimi" string="Data"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_pacient_tree" model="ir.ui.view">
+            <field name="name">pacient.tree</field>
+            <field name="model">spital.pacienti</field>
+            <field name="arch" type="xml">
+                <tree string="Pacientet">
+                    <field name="nr_personal"/>
+                    <field name="name"/>
+                    <field name="ditelindja"/>
+                    <field name="cel"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_pacient_search" model="ir.ui.view">
+            <field name="name">pacient.search</field>
+            <field name="model">spital.pacienti</field>
+            <field name="arch" type="xml">
+                <search string="Pacienti">
+                    <field name="nr_personal"/>
+                    <field name="name"/>
+                    <field name="amesia"/>
+                    <field name="atesia"/>
+                    <field name="ditelindja"/>
+                    <field name="gjinia"/>
+                    <field name="gjendja_civile"/>
+                    <field name="vendlindja"/>
+                    <field name="grupi_gjakut"/>
+                    <field name="adresa"/>
+                    <field name="cel"/>
+                    <field name="email"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_view_pacient_tree" model="ir.actions.act_window">
+            <field name="name">Pacientët</field>
+            <field name="res_model">spital.pacienti</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pacient_tree"/>
+            <field name="search_view_id" ref="view_pacient_search"/>
+        </record>
+
+        <menuitem
+            id="main_menu_pacient" name="Pacientët" sequence="200"
+            web_icon="spitali,static/description/rsz_pacienti.png"/>
+
+        <menuitem
+            id="menu_open_view_pacient"
+            action="open_view_pacient_tree"
+            parent="main_menu_pacient"
+            sequence="1"/>
+
+    </data>
+</odoo>

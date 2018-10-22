@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_konsulta_form" model="ir.ui.view">
+            <field name="name">konsulta.form</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <form string="Konsulta">
+                    <group>
+                        <group string="Të dhënat e konsultës">
+                            <field name="statusi_kons"/>
+                            <field name="pacient_id"/>
+                            <field name="dep_id"/>
+                            <field name="mjek_id" domain="[('departamenti', '=', dep_id)]" />
+                            <field name="date_fillimi"/>
+                            <field name="date_perfundimi"/>
+                            <field name="konsulte"/>
+                        </group>
+                        <group string="Rezultatet e konsultës">
+                            <field name="simptoma"/>
+                            <field name="name"/>
+                            <field name="trajtimi"/>
+                            <field name="shenim"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_konsulta_tree" model="ir.ui.view">
+            <field name="name">konsulta.tree</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <tree string="Konsultat">
+                    <field name="pacient_id"/>
+                    <field name="dep_id"/>
+                    <field name="mjek_id"/>
+                    <field name="date_fillimi"/>
+                    <field name="date_perfundimi"/>
+                    <field name="statusi_kons"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_konsulta_search" model="ir.ui.view">
+            <field name="name">konsulta.search</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <search string="Konsulta">
+                    <field name="statusi_kons"/>
+                    <field name="pacient_id"/>
+                    <field name="dep_id"/>
+                    <field name="mjek_id"/>
+                    <field name="date_fillimi"/>
+                    <field name="date_perfundimi"/>
+                    <field name="simptoma"/>
+                    <field name="name"/>
+                    <field name="trajtimi"/>
+                    <field name="shenim"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_konsulta_calendar" model="ir.ui.view">
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <calendar date_start="date_fillimi" color="mjek_id">
+                    <field name="pacient_id"/>
+                    <field name="mjek_id"/>
+                </calendar>
+            </field>
+        </record>
+
+         <record id="view_padisponueshem_form" model="ir.ui.view">
+            <field name="name">padisponueshem.form</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <form string="Padisponueshmëria e doktorit">
+                    <group string="Orari i padisponueshmërisë">
+                        <group>
+                            <field name="pacient_id" invisible="1"/>
+                            <field name="dep_id"/>
+                            <field name="mjek_id" domain="[('departamenti', '=', dep_id)]"/>
+                        </group>
+                        <group>
+                            <field name="date_fillimi"/>
+                            <field name="date_perfundimi"/>
+                            <field name="konsulte" attrs="{'invisible': [('konsulte', '=', False)]}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+         </record>
+
+        <record id="view_padisponueshem_tree" model="ir.ui.view">
+            <field name="name">padisponueshem.tree</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <tree string="Padisponueshmëria e doktorëve">
+                    <field name="pacient_id" invisible="1"/>
+                    <field name="mjek_id"/>
+                    <field name="dep_id"/>
+                    <field name="date_fillimi"/>
+                    <field name="date_perfundimi"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_padisponueshem_search" model="ir.ui.view">
+            <field name="name">padisponueshem.search</field>
+            <field name="model">spital.konsulta</field>
+            <field name="arch" type="xml">
+                <search string="Padisponueshmëria">
+                    <field name="dep_id"/>
+                    <field name="mjek_id"/>
+                    <field name="date_fillimi"/>
+                    <field name="date_perfundimi"/>
+                </search>
+            </field>
+        </record>
+
+        <!--         Action Windows          -->
+
+        <record id="open_view_konsulta_tree" model="ir.actions.act_window">
+            <field name="name">Konsultat</field>
+            <field name="res_model">spital.konsulta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_konsulta_tree"/>
+            <field name="domain">[('konsulte', '=', True)]</field>
+            <field name="search_view_id" ref="view_konsulta_search"/>
+        </record>
+
+        <record id="open_view_padisponueshem_tree" model="ir.actions.act_window">
+            <field name="name">Padisponueshmëria e doktorëve</field>
+            <field name="res_model">spital.konsulta</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_padisponueshem_tree"/>
+            <field name="domain">[('konsulte', '=', False)]</field>
+            <field name="search_view_id" ref="view_padisponueshem_search"/>
+        </record>
+
+        <record id="open_view_padisponueshem_form" model="ir.actions.act_window.view">
+            <field name="res_model">spital.konsulta</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_padisponueshem_form" />
+            <field name="act_window_id" ref="open_view_padisponueshem_tree" />
+        </record>
+
+        <record id="open_view_konsulta_calendar" model="ir.actions.act_window">
+            <field name="name">Kalendar</field>
+            <field name="res_model">spital.konsulta</field>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_konsulta_calendar"/>
+            <field name="domain">[('konsulte', '=', True)]</field>
+        </record>
+
+        <!--          Menute            -->
+
+        <menuitem
+            id="main_menu_konsulta" name="Konsultat" sequence="203"
+            web_icon="spitali,static/description/rsz_konsulta.png"/>
+
+        <menuitem
+            id="menu_open_view_konsulta"
+            action="open_view_konsulta_tree"
+            parent="main_menu_konsulta"
+            sequence="1"/>
+
+        <menuitem
+            id="menu_open_view_padisponueshem"
+            action="open_view_padisponueshem_tree"
+            parent="main_menu_konsulta"
+            sequence="2"/>
+
+        <menuitem
+            id="menu_open_view_kalendar"
+            action="open_view_konsulta_calendar"
+            parent="main_menu_konsulta"
+            sequence="3"/>
+
+    </data>
+</odoo>
