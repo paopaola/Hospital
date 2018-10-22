@@ -72,12 +72,12 @@
         </record>
 
 
-        <record id="open_view_dept_tree" model="ir.actions.act_window">
+        <record id="open_view_dept_kanban" model="ir.actions.act_window">
             <field name="name">Departamentet</field>
             <field name="res_model">spital.departamenti</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="view_id" ref="view_dept_tree"/>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="view_dept_kanban"/>
             <field name="search_view_id" ref="view_dept_search"/>
         </record>
 
@@ -87,7 +87,7 @@
 
         <menuitem
             id="menu_open_view_dept"
-            action="open_view_dept_tree"
+            action="open_view_dept_kanban"
             parent="main_menu_dept"
             sequence="1"/>
 
