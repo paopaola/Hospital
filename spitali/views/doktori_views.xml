@@ -2,6 +2,17 @@
 <odoo>
     <data>
 
+        <record id="open_view_doktor_calendar" model="ir.actions.act_window">
+            <field name="name">Kalendar</field>
+            <field name="res_model">spital.konsulta</field>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_konsulta_calendar"/>
+            <field name="context">{
+                "search_default_mjek_id": [active_id],
+                "default_mjek_id": active_id}
+            </field>
+        </record>
+
         <record id="view_doktor_form" model="ir.ui.view">
             <field name="name">doktor.form</field>
             <field name="model">spital.doktori</field>
@@ -12,6 +23,7 @@
                         <div class="oe_title">
                             <h1><field name="name" placeholder="Emri i doktorit"/></h1>
                             <h5><field name="statusi_dok"/></h5>
+                            <button class="btn btn-primary" name="%(open_view_doktor_calendar)d" type="action">Kalendari konsultave</button>
                         </div>
                         <notebook>
                             <page name="doktor_pune" string="Informacion rreth punës">
@@ -47,6 +59,16 @@
                                     </group>
                                 </group>
                             </page>
+                            <page name="historiku_konsultave" string="Historiku i konsultave">
+                                <field name="konsultat">
+                                    <tree>
+                                        <field name="date_fillimi" string="Data"/>
+                                        <field name="pacient_id"/>
+                                        <field name="name"/>
+                                        <field name="trajtimi"/>
+                                    </tree>
+                                </field>
+                            </page>
                         </notebook>
                         </div></div>
                     </sheet>
@@ -54,7 +76,7 @@
             </field>
         </record>
 
-         <record id="view_doktor_tree" model="ir.ui.view">
+        <record id="view_doktor_tree" model="ir.ui.view">
             <field name="name">doktor.tree</field>
             <field name="model">spital.doktori</field>
             <field name="arch" type="xml">
@@ -110,7 +132,6 @@
                                         <span class="o_kanban_record_subtitle"><h5><field name="specializimi_fundit"/></h5></span>
                                     </div>
                                 </div>
-
                                 <ul>
                                     <li id="last_login"/>
                                     <li><strong><field name="statusi_dok"/></strong></li>

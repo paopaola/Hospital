@@ -12,7 +12,7 @@
                             <field name="statusi_kons"/>
                             <field name="pacient_id"/>
                             <field name="dep_id"/>
-                            <field name="mjek_id" domain="[('departamenti', '=', dep_id)]" />
+                            <field name="mjek_id" domain="[('departamenti', '=', dep_id)]"/>
                             <field name="date_fillimi"/>
                             <field name="date_perfundimi"/>
                             <field name="konsulte"/>

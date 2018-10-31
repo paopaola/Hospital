@@ -45,11 +45,13 @@ class Pacienti(models.Model):
         ('nr_personal_unik', 'unique(nr_personal)', "Numri personal është unik për çdo individ!"),
     ]
 
-   # Kontrollon nese nr personal ka 10 char.
+   # Kontrollon nese nr personal ka 10 char dhe eshte ne formatin A11111111A.
     @api.constrains('nr_personal')
     def _nr_personal_length(self):
         if (len(self.nr_personal) != 10):
             raise ValidationError("Numri personal duhet të jetë me 10 karaktere!")
+        elif not (self.nr_personal[0].isalpha() and self.nr_personal[9].isalpha() and self.nr_personal[1:9].isdigit()):
+            raise ValidationError("Ju lutem shkruajeni saktë numrin tuaj personal!")
 
     # Kontrollon nese adresa e email eshte e vlefshme.
     @api.constrains('email')
@@ -88,6 +90,7 @@ class Doktori(models.Model):
         ('padisponueshem', 'I padisponueshëm'),
         ('zene', 'I zënë')
     ], string="Statusi i Doktorit", default="disponueshem")
+    konsultat = fields.One2many('spital.konsulta', 'mjek_id', string="Konsulta")
 
     #Info personal
     nr_personal = fields.Char(string="Nr. personal", required=True)
@@ -118,11 +121,13 @@ class Doktori(models.Model):
         ('nr_personal_unik_dok', 'unique(nr_personal)', "Numri personal është unik për çdo individ!"),
     ]
 
-    # Kontrollon nese nr personal ka 10 char.
+    # Kontrollon nese nr personal ka 10 char dhe eshte ne formatin A11111111A.
     @api.constrains('nr_personal')
     def _nr_personal_length(self):
-        if (len(self.nr_personal) != 10):
+        if len(self.nr_personal) != 10:
             raise ValidationError("Numri personal duhet të jetë me 10 karaktere!")
+        elif not (self.nr_personal[0].isalpha() and self.nr_personal[9].isalpha() and self.nr_personal[1:9].isdigit()):
+            raise ValidationError("Ju lutem shkruajeni saktë numrin tuaj personal!")
 
     # Kontrollon nese adresa e email e punes eshte e vlefshme.
     @api.constrains('email_pune')
@@ -132,7 +137,7 @@ class Doktori(models.Model):
             if match == None:
                 raise ValidationError('Ju lutem vendosni një adresë e-mail të vlefshme!')
 
-    # Kontrollon nese adresa e email personale eshte e vlefshme.
+    # Kontrollon nese adresa e email personal eshte e vlefshme.
     @api.constrains('email_personal')
     def validate_mail_personal(self):
         if self.email_personal:
